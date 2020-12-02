@@ -2,6 +2,7 @@ use std::env;
 use std::fs;
 use std::io;
 use std::time::{Duration, Instant};
+extern crate lazy_static;
 
 use advent_of_code::{get_day, noop};
 

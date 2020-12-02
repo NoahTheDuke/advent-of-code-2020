@@ -2,9 +2,11 @@
 pub mod day01;
 pub mod day02;
 
-pub fn noop(_inp: String) {}
+pub fn noop(_inp: String) -> String {
+    String::from("")
+}
 
-pub type DayFn = fn(String);
+pub type DayFn = fn(String) -> String;
 
 pub fn get_day(day: u32) -> (DayFn, DayFn) {
     return match day {

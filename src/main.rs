@@ -2,7 +2,6 @@ use std::env;
 use std::fs;
 use std::io;
 use std::time::{Duration, Instant};
-extern crate lazy_static;
 
 use advent_of_code::{get_day, noop};
 
@@ -64,17 +63,19 @@ fn main() {
     // Time it
     if to_run.0 != noop {
         println!("Running Part 1");
+        let part1_input = input.clone();
         let part1_start = Instant::now();
-        to_run.0(input.clone());
+        let result = to_run.0(part1_input);
         let part1_dur = part1_start.elapsed();
-        println!("Took {}", fmt_dur(part1_dur));
+        println!("{:}, {}", result, fmt_dur(part1_dur));
     }
 
     if to_run.1 != noop {
         println!("Running Part 2");
+        let part2_input = input.clone();
         let part2_start = Instant::now();
-        to_run.1(input.clone());
+        let result = to_run.1(part2_input);
         let part2_dur = part2_start.elapsed();
-        println!("Took {}", fmt_dur(part2_dur));
+        println!("{:}, {}", result, fmt_dur(part2_dur));
     }
 }

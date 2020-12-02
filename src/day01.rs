@@ -11,22 +11,22 @@ fn search(numbers: Vec<usize>, k: usize) -> Option<usize> {
     return None;
 }
 
-pub fn part1(inp: String) {
+pub fn part1(inp: String) -> String {
     let numbers = inp.lines().map(|x| x.parse().unwrap()).collect::<Vec<usize>>();
     match search(numbers, 2) {
         Some(result) => {
-            println!("{:?}", result);
+            result.to_string()
         }
-        None => {}
+        None => String::from("")
     }
 }
 
-pub fn part2(inp: String) {
+pub fn part2(inp: String) -> String {
     let numbers = inp.lines().map(|x| x.parse().unwrap()).collect::<Vec<usize>>();
     match search(numbers, 3) {
         Some(result) => {
-            println!("{:?}", result);
+            result.to_string()
         }
-        None => {}
+        None => String::from("")
     }
 }

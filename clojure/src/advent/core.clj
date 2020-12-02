@@ -2,7 +2,7 @@
   (:require [clojure.pprint :as pprint]
             [cond-plus.core :refer [cond+]]
             [advent.day01]
-            ; [day02]
+            [advent.day02]
             ))
 
 (defn get-day

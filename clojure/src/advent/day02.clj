@@ -1,7 +1,6 @@
 (ns advent.day02
   (:require [clojure.edn :as edn]
-            [clojure.string :as str]
-            [cond-plus.core :refer [cond+]]))
+            [clojure.string :as str]))
 
 (def RE #"(\d+)-(\d+) ([a-z]): ([a-z]+)")
 
@@ -32,9 +31,5 @@
                        first-position (str (nth (:pass rule) (dec (:low rule))))
                        second-position (str (nth (:pass rule) (dec (:high rule))))
                        letter (:letter rule)]
-                   (cond+
-                     [(and (= first-position letter) (= second-position letter))
-                      false]
-                     [(= first-position letter)]
-                     [(= second-position letter)]))))
+                   (not= (= first-position letter) (= second-position letter)))))
        (count)))

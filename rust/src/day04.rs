@@ -1,32 +1,24 @@
-use std::collections::HashMap;
 use lazy_static::lazy_static;
 use regex::Regex;
+use std::collections::HashMap;
 
 // --- Day 4: Passport Processing ---
+static REQUIRED_FIELDS: [&str; 7] = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
 
 pub fn part1(input: String) -> String {
-    let passports: Vec<&str> = input.split("\n\n").collect();
     let mut count = 0;
 
-    let required_fields: [&'static str; 7] = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
+    for raw_passport in input.split("\n\n") {
+        let mut passport = HashMap::new();
 
-    for passport in passports {
-        let mut temp: HashMap<String, String> = HashMap::new();
-
-        let fields: Vec<(&str, &str)> = passport
-            .split_whitespace()
-            .filter(|s| !s.is_empty())
-            .map(|s| {
-                let pair: Vec<&str> = s.split(":").collect();
-                (pair[0], pair[1])
-            })
-            .collect();
-        for (key, val) in fields {
-            temp.insert(key.to_owned(), val.to_owned());
+        for fields in raw_passport.split_whitespace() {
+            let pair: Vec<&str> = fields.split(":").collect();
+            passport.insert(pair[0], pair[1]);
         }
+
         let mut valid = true;
-        for rf in required_fields.iter() {
-            if !temp.contains_key(&rf.to_string()) {
+        for rf in REQUIRED_FIELDS.iter() {
+            if !passport.contains_key(rf) {
                 valid = false;
                 break;
             }
@@ -46,74 +38,57 @@ lazy_static! {
 }
 
 pub fn part2(input: String) -> String {
-    let passports: Vec<&str> = input.split("\n\n").collect();
     let mut count = 0;
 
-    let required_fields: [&'static str; 7] = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
+    for raw_passport in input.split("\n\n") {
+        let mut passport = HashMap::new();
 
-    for passport in passports {
-        let mut temp: HashMap<String, String> = HashMap::new();
-
-        let fields: Vec<(&str, &str)> = passport
-            .split_whitespace()
-            .filter(|s| !s.is_empty())
-            .map(|s| {
-                let pair: Vec<&str> = s.split(":").collect();
-                (pair[0], pair[1])
-            })
-            .collect();
-        for (key, val) in fields {
-            temp.insert(key.to_owned(), val.to_owned());
+        for fields in raw_passport.split_whitespace() {
+            let pair: Vec<&str> = fields.split(":").collect();
+            passport.insert(pair[0], pair[1]);
         }
+
         let mut valid = true;
-        for rf in required_fields.iter() {
-            if !temp.contains_key(&rf.to_string()) {
+        for rf in REQUIRED_FIELDS.iter() {
+            if !passport.contains_key(rf) {
                 valid = false;
                 break;
             }
-            let val = temp.get(&rf.to_string()).unwrap().to_string();
+            let val = passport.get(rf).unwrap().to_string();
             valid = match *rf {
                 // byr (Birth Year) - four digits; at least 1920 and at most 2002.
-                "byr" => {
-                    match val.parse::<i32>() {
-                        Ok(n) => 1920 <= n && n <= 2002,
-                        Err(_) => false,
-                    }
+                "byr" => match val.parse::<usize>() {
+                    Ok(1920..=2002) => true,
+                    _ => false,
                 },
                 // iyr (Issue Year) - four digits; at least 2010 and at most 2020.
-                "iyr" => {
-                    match val.parse::<i32>() {
-                        Ok(n) => 2010 <= n && n <= 2020,
-                        Err(_) => false,
-                    }
+                "iyr" => match val.parse::<usize>() {
+                    Ok(2010..=2020) => true,
+                    _ => false,
                 },
                 // eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
-                "eyr" => {
-                    match val.parse::<i32>() {
-                        Ok(n) => 2020 <= n && n <= 2030,
-                        Err(_) => false,
-                    }
+                "eyr" => match val.parse::<usize>() {
+                    Ok(2020..=2030) => true,
+                    _ => false,
                 },
                 // hgt (Height) - a number followed by either cm or in:
                 //     If cm, the number must be at least 150 and at most 193.
                 //     If in, the number must be at least 59 and at most 76.
-                "hgt" => {
-                    match HGT.captures(&val) {
-                        Some(result) => {
-                            let unit = result.name("unit").map_or("", |m| m.as_str());
-                            let num = result
-                                .name("num")
-                                .map_or("", |m| m.as_str())
-                                .parse::<i32>()
-                                .unwrap_or(0);
-                            match unit {
-                                "cm" => 150 <= num && num <= 193,
-                                "in" => 59 <= num && num <= 76,
-                                _ => false
-                            }
-                        },
-                        None => false,
+                "hgt" => match HGT.captures(&val) {
+                    Some(result) => {
+                        let unit = result.name("unit").map_or("", |m| m.as_str());
+                        let num = result
+                            .name("num")
+                            .map_or("", |m| m.as_str())
+                            .parse::<usize>()
+                            .unwrap_or(0);
+                        match unit {
+                            "cm" => 150 <= num && num <= 193,
+                            "in" => 59 <= num && num <= 76,
+                            _ => false,
+                        }
                     }
+                    None => false,
                 },
                 // hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
                 "hcl" => HCL.is_match(&val),

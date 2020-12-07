@@ -1,5 +1,4 @@
 pub fn part1(input: String) -> String {
-    // let lines: Vec<&str> = .collect();
     let lines: isize = input
         .lines()
         .map(|line| {
@@ -30,8 +29,7 @@ pub fn part2(input: String) -> String {
         ).unwrap();
         if seat_id > max {
             max = seat_id;
-        }
-        if seat_id < min {
+        } else if seat_id < min {
             min = seat_id;
         }
         total += seat_id;

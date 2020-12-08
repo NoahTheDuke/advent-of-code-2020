@@ -26,7 +26,8 @@ pub fn part2(input: String) -> String {
                 .replace("L", "0")
                 .replace("R", "1"),
             2,
-        ).unwrap();
+        )
+        .unwrap();
         if seat_id > max {
             max = seat_id;
         } else if seat_id < min {

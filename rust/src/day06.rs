@@ -3,10 +3,11 @@ use std::collections::{HashMap, HashSet};
 // --- Day 6: Custom Customs ---
 
 pub fn part1(input: String) -> String {
-    input.split("\n\n")
+    input
+        .split("\n\n")
         .map(|line| {
             line.chars()
-                .filter(|c| c.is_alphanumeric())
+                .filter(|c: &char| c.is_ascii_alphabetic())
                 .collect::<HashSet<char>>()
                 .len()
         })
@@ -15,7 +16,8 @@ pub fn part1(input: String) -> String {
 }
 
 pub fn part2(input: String) -> String {
-    input.split("\n\n")
+    input
+        .split("\n\n")
         .map(|group| {
             let mut counter: HashMap<char, usize> = HashMap::new();
             for c in group.chars() {
@@ -24,10 +26,7 @@ pub fn part2(input: String) -> String {
                 }
             }
             let group_size = group.lines().count();
-            counter
-                .values()
-                .filter(|v| **v == group_size)
-                .count()
+            counter.values().filter(|v| **v == group_size).count()
         })
         .sum::<usize>()
         .to_string()

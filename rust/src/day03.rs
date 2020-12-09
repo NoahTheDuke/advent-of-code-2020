@@ -23,14 +23,14 @@ fn stepper(input: &String, right: usize, down: usize) -> u64 {
         right_count += 1;
     }
 
-    return count;
+    count
 }
 
-pub fn part1(input: String) -> String {
-    stepper(&input, 3, 1).to_string()
+pub fn part1(input: String) -> usize {
+    stepper(&input, 3, 1) as usize
 }
 
-pub fn part2(input: String) -> String {
+pub fn part2(input: String) -> usize {
     let angles = vec![(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)];
 
     let mut result: u64 = 1;
@@ -39,5 +39,5 @@ pub fn part2(input: String) -> String {
         result *= stepper(&input, right, down);
     }
 
-    result.to_string()
+    result as usize
 }

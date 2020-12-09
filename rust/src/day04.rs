@@ -5,7 +5,7 @@ use std::collections::HashMap;
 // --- Day 4: Passport Processing ---
 static REQUIRED_FIELDS: [&str; 7] = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
 
-pub fn part1(input: String) -> String {
+pub fn part1(input: String) -> usize {
     let mut count = 0;
 
     for raw_passport in input.split("\n\n") {
@@ -27,7 +27,7 @@ pub fn part1(input: String) -> String {
             count += 1
         }
     }
-    count.to_string()
+    count
 }
 
 lazy_static! {
@@ -37,7 +37,7 @@ lazy_static! {
     static ref PID: Regex = Regex::new(r"^(\d{9})$").unwrap();
 }
 
-pub fn part2(input: String) -> String {
+pub fn part2(input: String) -> usize {
     let mut count = 0;
 
     for raw_passport in input.split("\n\n") {
@@ -106,5 +106,5 @@ pub fn part2(input: String) -> String {
             count += 1
         }
     }
-    count.to_string()
+    count
 }

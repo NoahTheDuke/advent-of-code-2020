@@ -1,5 +1,7 @@
-pub fn part1(input: String) -> String {
-    let lines: isize = input
+//
+//
+pub fn part1(input: String) -> usize {
+    input
         .lines()
         .map(|line| {
             line.replace("F", "0")
@@ -7,13 +9,12 @@ pub fn part1(input: String) -> String {
                 .replace("L", "0")
                 .replace("R", "1")
         })
-        .map(|line| isize::from_str_radix(&line, 2).unwrap())
+        .map(|line| usize::from_str_radix(&line, 2).unwrap())
         .max()
-        .unwrap_or(0);
-    lines.to_string()
+        .unwrap_or(0)
 }
 
-pub fn part2(input: String) -> String {
+pub fn part2(input: String) -> usize {
     let mut max = isize::MIN;
     let mut min = isize::MAX;
     let mut total = 0;
@@ -35,5 +36,5 @@ pub fn part2(input: String) -> String {
         }
         total += seat_id;
     }
-    ((min..=max).sum::<isize>() - total).to_string()
+    ((min..=max).sum::<isize>() - total) as usize
 }

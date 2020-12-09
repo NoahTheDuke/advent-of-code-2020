@@ -1,4 +1,4 @@
-use std::collections::{HashSet};
+use std::collections::HashSet;
 use std::str::FromStr;
 
 // --- Day 8: Template ---
@@ -29,11 +29,14 @@ impl FromStr for Instruction {
 
         let operand = input[4..].parse().unwrap();
 
-        Ok(Instruction { opcode: opcode, operand: operand })
+        Ok(Instruction {
+            opcode: opcode,
+            operand: operand,
+        })
     }
 }
 
-fn execute(instructions: &Vec<Instruction>) -> Result<isize, isize> {
+fn execute(instructions: &Vec<Instruction>) -> Result<usize, usize> {
     let mut seen = HashSet::new();
     let mut accumulator = 0;
     let mut idx = 0;
@@ -41,7 +44,7 @@ fn execute(instructions: &Vec<Instruction>) -> Result<isize, isize> {
 
     while step < instructions.len() {
         if seen.contains(&idx) {
-            return Err(accumulator);
+            return Err(accumulator as usize);
         }
 
         if let Some(line) = &instructions.get(idx) {
@@ -51,13 +54,13 @@ fn execute(instructions: &Vec<Instruction>) -> Result<isize, isize> {
                 Opcode::Acc => {
                     accumulator += line.operand;
                     idx += 1;
-                },
+                }
                 Opcode::Jmp => {
                     idx = (idx as isize + line.operand) as usize;
-                },
+                }
                 Opcode::Nop => {
                     idx += 1;
-                },
+                }
             }
             step += 1;
         } else {
@@ -65,16 +68,16 @@ fn execute(instructions: &Vec<Instruction>) -> Result<isize, isize> {
         }
     }
 
-    Ok(accumulator)
+    Ok(accumulator as usize)
 }
 
-pub fn part1(input: String) -> String {
+pub fn part1(input: String) -> usize {
     let instructions = input
         .lines()
         .map(|line| Instruction::from_str(line).unwrap())
         .collect::<Vec<_>>();
 
-    execute(&instructions).err().unwrap().to_string()
+    execute(&instructions).err().unwrap()
 }
 
 fn swap(instruction: &mut Instruction) {
@@ -85,7 +88,7 @@ fn swap(instruction: &mut Instruction) {
     }
 }
 
-pub fn part2(input: String) -> String {
+pub fn part2(input: String) -> usize {
     let mut instructions = input
         .lines()
         .map(|line| Instruction::from_str(line).unwrap())
@@ -96,12 +99,12 @@ pub fn part2(input: String) -> String {
         swap(&mut instructions[step]);
 
         if let Some(result) = execute(&instructions).ok() {
-            return result.to_string();
+            return result as usize;
         }
 
         swap(&mut instructions[step]);
         step += 1;
     }
 
-    String::from("asdf")
+    0
 }

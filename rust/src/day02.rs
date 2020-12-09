@@ -26,7 +26,7 @@ fn build_password_rule(line: &str) -> PasswordRule {
     }
 }
 
-pub fn part1(input: String) -> String {
+pub fn part1(input: String) -> usize {
     input
         .lines()
         .filter(|line| {
@@ -35,10 +35,9 @@ pub fn part1(input: String) -> String {
             rule.low <= count_matches && count_matches <= rule.high
         })
         .count()
-        .to_string()
 }
 
-pub fn part2(input: String) -> String {
+pub fn part2(input: String) -> usize {
     input
         .lines()
         .filter(|line| {
@@ -48,5 +47,4 @@ pub fn part2(input: String) -> String {
             (first_position == rule.letter) ^ (second_position == rule.letter)
         })
         .count()
-        .to_string()
 }

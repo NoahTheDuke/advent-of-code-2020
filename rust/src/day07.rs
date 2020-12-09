@@ -35,7 +35,7 @@ fn parse1(input: &String) -> HashMap<&str, Vec<(&str, &str)>> {
     bags
 }
 
-pub fn part1(input: String) -> String {
+pub fn part1(input: String) -> usize {
     let bags = parse1(&input);
 
     let mut visited = HashSet::new();
@@ -60,7 +60,7 @@ pub fn part1(input: String) -> String {
         }
     }
 
-    visited.len().to_string()
+    visited.len()
 }
 
 fn parse2(input: &String) -> HashMap<&str, Vec<(usize, &str)>> {
@@ -98,9 +98,7 @@ fn dfs(bags: &HashMap<&str, Vec<(usize, &str)>>, current: &str) -> usize {
     result
 }
 
-pub fn part2(input: String) -> String {
+pub fn part2(input: String) -> usize {
     let bags = parse2(&input);
-    let result = dfs(&bags, "shiny gold") - 1;
-
-    result.to_string()
+    dfs(&bags, "shiny gold") - 1
 }

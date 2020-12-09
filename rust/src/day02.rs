@@ -15,7 +15,7 @@ lazy_static! {
     static ref RE: Regex = Regex::new(r"(\d+)-(\d+) ([a-z]): ([a-z]+)").unwrap();
 }
 
-fn build_password_rule(line: &String) -> PasswordRule {
+fn build_password_rule(line: &str) -> PasswordRule {
     let matches = RE.captures(line).unwrap();
 
     PasswordRule {
@@ -26,10 +26,9 @@ fn build_password_rule(line: &String) -> PasswordRule {
     }
 }
 
-pub fn part1(inp: String) -> String {
-    let lines = inp.lines().map(|x| x.to_string()).collect::<Vec<String>>();
-    lines
-        .into_iter()
+pub fn part1(input: String) -> String {
+    input
+        .lines()
         .filter(|line| {
             let rule = build_password_rule(line);
             let count_matches = rule.password.matches(rule.letter).count();
@@ -39,10 +38,9 @@ pub fn part1(inp: String) -> String {
         .to_string()
 }
 
-pub fn part2(inp: String) -> String {
-    let lines = inp.lines().map(|x| x.to_string()).collect::<Vec<String>>();
-    lines
-        .into_iter()
+pub fn part2(input: String) -> String {
+    input
+        .lines()
         .filter(|line| {
             let rule = build_password_rule(line);
             let first_position = rule.password.chars().nth(rule.low - 1).unwrap();

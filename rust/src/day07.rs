@@ -63,7 +63,7 @@ pub fn part1(input: String) -> String {
     visited.len().to_string()
 }
 
-fn parse2(input: &String) -> HashMap<&str, Vec<(&str, &str)>> {
+fn parse2(input: &String) -> HashMap<&str, Vec<(usize, &str)>> {
     let mut bags = HashMap::new();
 
     for line in input.lines() {
@@ -75,7 +75,7 @@ fn parse2(input: &String) -> HashMap<&str, Vec<(&str, &str)>> {
                             (Some(qty), Some(edge)) => {
                                 bags.entry(node.as_str())
                                     .or_insert(Vec::new())
-                                    .push((qty.as_str(), edge.as_str()));
+                                    .push((qty.as_str().parse::<usize>().unwrap(), edge.as_str()));
                             }
                             _ => (),
                         }
@@ -88,11 +88,11 @@ fn parse2(input: &String) -> HashMap<&str, Vec<(&str, &str)>> {
     bags
 }
 
-fn dfs(bags: &HashMap<&str, Vec<(&str, &str)>>, current: &str) -> usize {
+fn dfs(bags: &HashMap<&str, Vec<(usize, &str)>>, current: &str) -> usize {
     let mut result: usize = 1;
     if let Some(container_bags) = bags.get(current) {
         for (qty, container_bag) in container_bags {
-            result += qty.parse::<usize>().unwrap() * dfs(bags, container_bag);
+            result += qty * dfs(bags, container_bag);
         }
     }
     result

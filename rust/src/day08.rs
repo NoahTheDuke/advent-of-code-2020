@@ -1,4 +1,3 @@
-use std::collections::HashSet;
 use std::str::FromStr;
 
 // --- Day 8: Template ---
@@ -37,18 +36,18 @@ impl FromStr for Instruction {
 }
 
 fn execute(instructions: &Vec<Instruction>) -> Result<usize, usize> {
-    let mut seen = HashSet::new();
+    let mut seen = vec![false; instructions.len()];
     let mut accumulator = 0;
     let mut idx = 0;
     let mut step = 0;
 
     while step < instructions.len() {
-        if seen.contains(&idx) {
+        if *seen.get(idx).unwrap_or(&false) {
             return Err(accumulator as usize);
         }
 
         if let Some(line) = &instructions.get(idx) {
-            seen.insert(idx);
+            seen[idx] = true;
 
             match line.opcode {
                 Opcode::Acc => {

@@ -1,3 +1,10 @@
+pub mod fmt_dur;
+use std::env;
+use std::fs;
+use std::io;
+use std::time::{Instant};
+use fmt_dur::{fmt_dur};
+
 // Days
 pub mod day01;
 pub mod day02;
@@ -31,4 +38,57 @@ pub fn get_day(day: u32) -> (DayFn, DayFn) {
             return (noop, noop);
         }
     };
+}
+
+pub fn run_both_days(args: Vec<String>) {
+    // Get day string
+    let mut day = String::new();
+
+    if args.len() >= 2 {
+        day = args[1].clone();
+    } else {
+        println!("Enter day: ");
+        io::stdin()
+            .read_line(&mut day)
+            .expect("Failed to read line");
+    }
+    // Parse day as number
+    day = day.trim().to_string();
+    let day_num: u32 = match day.parse() {
+        Ok(num) => num,
+        Err(_) => {
+            println!("Invalid day number: {}", day);
+            return;
+        }
+    };
+    // Read input file
+    let cwd = env::current_dir().unwrap();
+    let filename = cwd
+        .join("..")
+        .join("inputs")
+        .join(format!("day{:02}.txt", day_num));
+    println!("Reading {}", filename.display());
+    let input = fs::read_to_string(filename).expect("Error while reading");
+
+    // Get corresponding function
+
+    let to_run = get_day(day_num);
+    // Time it
+    if to_run.0 != noop {
+        println!("Running Part 1");
+        let part1_input = input.clone();
+        let part1_start = Instant::now();
+        let result = to_run.0(part1_input);
+        let part1_dur = part1_start.elapsed();
+        println!("{:}, {}", result, fmt_dur(part1_dur));
+    }
+
+    if to_run.1 != noop {
+        println!("Running Part 2");
+        let part2_input = input.clone();
+        let part2_start = Instant::now();
+        let result = to_run.1(part2_input);
+        let part2_dur = part2_start.elapsed();
+        println!("{:}, {}", result, fmt_dur(part2_dur));
+    }
 }

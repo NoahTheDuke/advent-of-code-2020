@@ -1,4 +1,4 @@
-use std::time::{Duration};
+use std::time::Duration;
 
 pub fn fmt_time(ms: f64) -> String {
     if ms <= 1.0 {
@@ -23,4 +23,3 @@ pub fn fmt_time(ms: f64) -> String {
 pub fn fmt_dur(dur: Duration) -> String {
     return fmt_time(dur.as_secs_f64() * 1000.0);
 }
-

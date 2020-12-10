@@ -26,6 +26,7 @@ fn build_password_rule(line: &str) -> PasswordRule {
     }
 }
 
+// 447
 pub fn part1(input: String) -> usize {
     input
         .lines()
@@ -37,6 +38,7 @@ pub fn part1(input: String) -> usize {
         .count()
 }
 
+// 249
 pub fn part2(input: String) -> usize {
     input
         .lines()

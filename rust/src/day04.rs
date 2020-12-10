@@ -5,6 +5,7 @@ use std::collections::HashMap;
 // --- Day 4: Passport Processing ---
 static REQUIRED_FIELDS: [&str; 7] = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
 
+// 210
 pub fn part1(input: String) -> usize {
     let mut count = 0;
 
@@ -37,6 +38,7 @@ lazy_static! {
     static ref PID: Regex = Regex::new(r"^(\d{9})$").unwrap();
 }
 
+// 131
 pub fn part2(input: String) -> usize {
     let mut count = 0;
 

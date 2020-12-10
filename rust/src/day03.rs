@@ -6,7 +6,6 @@ fn stepper(input: &String, right: usize, down: usize) -> u64 {
     // method that's popular on reddit. given that the fun is solving this however,
     // i don't mind either way.
 
-    // let width = input.find("\n").unwrap() + 1;
     let width = 32;
     let mut count: u64 = 0;
     let mut right_count = 0;
@@ -26,10 +25,12 @@ fn stepper(input: &String, right: usize, down: usize) -> u64 {
     count
 }
 
+// 278
 pub fn part1(input: String) -> usize {
     stepper(&input, 3, 1) as usize
 }
 
+// 9709761600
 pub fn part2(input: String) -> usize {
     let angles = vec![(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)];
 

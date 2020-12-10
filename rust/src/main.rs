@@ -1,6 +1,6 @@
-use std::env;
 use advent_of_code;
+use std::env;
 
 fn main() {
-    advent_of_code::run_both_days(env::args().collect());
+    advent_of_code::run(env::args().collect());
 }

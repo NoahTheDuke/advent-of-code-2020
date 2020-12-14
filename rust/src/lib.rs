@@ -18,6 +18,7 @@ pub mod day08;
 pub mod day09;
 pub mod day10;
 pub mod day11;
+pub mod day12;
 
 pub fn noop(_inp: String) -> usize {
     0
@@ -40,6 +41,7 @@ fn build_days() -> DaysMap {
     days.insert(09, (day09::part1, day09::part2));
     days.insert(10, (day10::part1, day10::part2));
     days.insert(11, (day11::part1, day11::part2));
+    days.insert(12, (day12::part1, day12::part2));
 
     days
 }

@@ -134,11 +134,11 @@ fn iterate2(mut space: Space) -> usize {
                                 num_adjacent += 1;
                                 multiplier = 1;
                                 break 'distance;
-                            },
+                            }
                             TILE::Chair => {
                                 multiplier = 1;
                                 break 'distance;
-                            },
+                            }
                             _ => (),
                         }
                         multiplier += 1;

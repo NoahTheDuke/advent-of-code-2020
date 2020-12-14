@@ -1,7 +1,7 @@
+use std::collections::HashMap;
 use std::env;
 use std::fs;
 use std::time::Instant;
-use std::collections::HashMap;
 
 pub mod fmt_dur;
 use fmt_dur::{fmt_dur, fmt_time};
@@ -17,6 +17,7 @@ pub mod day07;
 pub mod day08;
 pub mod day09;
 pub mod day10;
+pub mod day11;
 
 pub fn noop(_inp: String) -> usize {
     0
@@ -38,6 +39,7 @@ fn build_days() -> DaysMap {
     days.insert(08, (day08::part1, day08::part2));
     days.insert(09, (day09::part1, day09::part2));
     days.insert(10, (day10::part1, day10::part2));
+    days.insert(11, (day11::part1, day11::part2));
 
     days
 }
@@ -67,7 +69,12 @@ fn run_both_days(day_fns: &DaysMap, day_num: usize) -> f64 {
             let part1_start = Instant::now();
             let result = to_run.0(part1_input);
             let part1_dur = part1_start.elapsed();
-            println!("day{:02}::part1: {:}, {}", day_num, result, fmt_dur(part1_dur));
+            println!(
+                "day{:02}::part1: {:}, {}",
+                day_num,
+                result,
+                fmt_dur(part1_dur)
+            );
             duration += part1_dur.as_secs_f64();
         }
 
@@ -76,7 +83,12 @@ fn run_both_days(day_fns: &DaysMap, day_num: usize) -> f64 {
             let part2_start = Instant::now();
             let result = to_run.1(part2_input);
             let part2_dur = part2_start.elapsed();
-            println!("day{:02}::part2: {:}, {}", day_num, result, fmt_dur(part2_dur));
+            println!(
+                "day{:02}::part2: {:}, {}",
+                day_num,
+                result,
+                fmt_dur(part2_dur)
+            );
             duration += part2_dur.as_secs_f64();
         }
     }

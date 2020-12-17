@@ -1,15 +1,5 @@
 // --- Day 13: Shuttle Search ---
 
-// (->> inp
-//      (map (fn [id]
-//             (let [rem (mod wait id)]
-//               [id (- id rem)])))
-//      (reduce (fn [[prev_id prev_rem] [id rem]]
-//                (if (< rem prev_rem)
-//                  [id rem]
-//                  [prev_id prev_rem])))
-//      (apply *'))
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct Bus {
     id: usize,
@@ -47,12 +37,14 @@ fn parse_p1(input: String) -> Data {
     Data { wait, nums }
 }
 
-fn do_it(data: Data) -> usize {
-    data.nums[1..]
+// 161
+pub fn part1(input: String) -> usize {
+    let Data {nums, wait} = parse_p1(input);
+    nums[1..]
         .iter()
         .map(|bus| Bus {
             id: bus.id,
-            rem: bus.id - (data.wait % bus.id),
+            rem: bus.id - (wait % bus.id),
         })
         .fold(
             Bus::new(1),
@@ -67,14 +59,11 @@ fn do_it(data: Data) -> usize {
         .calculate()
 }
 
-// 161
-pub fn part1(input: String) -> usize {
-    do_it(parse_p1(input))
-}
-
 // stolen from https://www.reddit.com/r/adventofcode/comments/kc4njx/2020_day_13_solutions/gfosi5s/
-fn parse_p2(input: String) -> usize {
-    input.lines()
+// 213890632230818
+pub fn part2(input: String) -> usize {
+    input
+        .lines()
         .last()
         .unwrap()
         .split(",")
@@ -83,13 +72,11 @@ fn parse_p2(input: String) -> usize {
         .enumerate()
         .filter_map(|(idx, bus)| bus.map(|bus| (idx, bus)))
         .fold((0, 1), |(mut solution, step), (idx, bus)| {
-            solution = (solution..).step_by(step).find(|x| (x + idx) % bus == 0).unwrap();
+            solution = (solution..)
+                .step_by(step)
+                .find(|x| (x + idx) % bus == 0)
+                .unwrap();
             (solution, step * bus)
         })
         .0
-}
-
-// 213890632230818
-pub fn part2(input: String) -> usize {
-    parse_p2(input)
 }

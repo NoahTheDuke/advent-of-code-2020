@@ -1,7 +1,11 @@
 // --- Day 15: Rambunctious Recitation ---
 
 fn parse(input: String) -> Vec<usize> {
-    input.trim().split(",").filter_map(|x| x.parse().ok()).collect()
+    input
+        .trim()
+        .split(",")
+        .filter_map(|x| x.parse().ok())
+        .collect()
 }
 
 // 2011

@@ -20,9 +20,9 @@ impl FromStr for Instruction {
 
     fn from_str(input: &str) -> Result<Instruction, Self::Err> {
         let opcode = match &input[..3] {
-            "acc" | "Acc" => Opcode::Acc,
-            "jmp" | "Jmp" => Opcode::Jmp,
-            "nop" | "Nop" => Opcode::Nop,
+            "acc" => Opcode::Acc,
+            "jmp" => Opcode::Jmp,
+            "nop" => Opcode::Nop,
             _ => panic!(),
         };
 

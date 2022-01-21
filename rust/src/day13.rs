@@ -39,7 +39,7 @@ fn parse_p1(input: String) -> Data {
 
 // 161
 pub fn part1(input: String) -> usize {
-    let Data {nums, wait} = parse_p1(input);
+    let Data { nums, wait } = parse_p1(input);
     nums[1..]
         .iter()
         .map(|bus| Bus {

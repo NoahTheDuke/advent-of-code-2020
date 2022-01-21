@@ -10,12 +10,14 @@ fn stepper(input: &String, right: usize, down: usize) -> u64 {
     let mut count: u64 = 0;
     let mut right_count = 0;
     let mut row = 0;
+    let len = input.len();
+    let bytes = input.as_bytes();
     loop {
         let col = (right_count * right) % (width - 1);
         let idx = (row * width) + col;
-        if idx >= input.len() {
+        if idx >= len {
             break;
-        } else if input.as_bytes()[idx] == b'#' {
+        } else if bytes[idx] == b'#' {
             count += 1;
         }
         row += down;
